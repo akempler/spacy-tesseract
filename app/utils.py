@@ -3,14 +3,10 @@ import os
 import sys
 
 UPLOAD_FOLDER = './uploads'
-#app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
-#app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024 # 10485760 bytes = 10.48576mb
+
 # 10485760 bytes = 10.48576mb
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'pdf'])
-
-def test():
-  return 'TESTING!!!!'
 
 def upload_file(request):
   """

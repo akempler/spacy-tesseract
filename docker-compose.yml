@@ -1,11 +1,10 @@
 version: "3"
 services: 
-  # spacyapi:
-  #   image: jgontrum/spacyapi:en_v2
-  #   ports:
-  #     - "127.0.0.1:8000:80"
+  spacyapi:
+    image: jgontrum/spacyapi:en_v2
+    ports:
+      - "127.0.0.1:8000:80"
     # restart: always
-#https://github.com/jgontrum/spacy-api-docker
 
   tesseract:
     build:
