@@ -1,7 +1,7 @@
 # Example php script to interact with the tesseract/spacy container.
 
 # Installation
-```composer require guzzlehttp/guzzle```
+```composer install```
 
 # Usage
 run from in the directory with:
