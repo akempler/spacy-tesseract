@@ -1,0 +1,4 @@
+.vscode/
+app/__pycache__/
+app/uploads/
+vendor
