@@ -14,17 +14,17 @@ Clone this repo.
 ```docker-compose up```
 
 ## Usage / API
+These endpoints are available at:
+http://localhost:5000
 
 #### OCR
 Uses tesseract to retrieve the text from an image.
-These endpoints are available at:
-http://localhost:5000
 
 #### `POST` `/api/ocr`
 
 ```
 {
-  "file": The source file
+  "file": A source pdf file
 }
 ```
 
@@ -62,3 +62,45 @@ Example response:
 }
 ```
 
+---
+
+#### Spacy
+Uses Spacy nlp to retrieve information about text.  
+
+Can provide a pdf or a text string to these endpoints.
+
+#### `POST` `/api/annotate/sentences`
+
+You must provide one or the other of these. If both are present, the pdf will be used as the source.
+```
+{
+  "file": A source pdf file, <br/>
+  "text": Text to prociess (instead of a file).
+}
+```
+
+Name | Type | Description
+------------ | ------------- | -------------
+file | file resource | The file to process for text.
+text | Text string | The text to process.
+
+Example response:
+
+```
+{
+  "sentences": [
+    "SOUTH CAROLINA REVENUE AND FISCAL AFFAIRS OFFICE\n\n",
+    "STATEMENT OF ESTIMATED FISCAL IMPACT\n",
+    "(803)734-0640 » RFA.SC.GOV/IMPACTS,\n\n \n\n \n\n",
+    "Bill Number: H. 3020 _",
+    "Introduced on January 8, 2019\n\n",
+    "Author: MeCravy\n",
+    "Subject:",
+    "Income Tax Credit, Rehabilitation Expenditures for Historic Structures",
+    "Requestor:",
+    "House Judiciary\n\nRFA Analyst(s)",
+    ": Griffith and Gardner\nImpact Date:___April 4, 2019\n\n \n\n",
+    "Fiscal Impact Summary\n\n",
+  ]
+}
+```
