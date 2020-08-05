@@ -1,6 +1,7 @@
 from werkzeug.utils import secure_filename
 import os
 import sys
+import pdf2image
 
 UPLOAD_FOLDER = './uploads'
 
@@ -29,6 +30,20 @@ def upload_file(request):
       filepath = os.path.join(UPLOAD_FOLDER, filename)
       file.save(filepath)
 
+      file_name, file_extension = os.path.splitext(filename)
+
+      if file_extension == '.pdf':
+        pages = pdf2image.convert_from_path(pdf_path=filepath, dpi=200, size=(1654,2340))
+        for i in range(len(pages)):
+          filename = file_name + str(i) + '.jpg'
+          filepath = os.path.join(UPLOAD_FOLDER, filename)
+          print(filename, flush=True)
+          print(filepath, flush=True)
+          pages[i].save(filepath)
+          # for now returning first page until TODO below.
+          return filepath
+
+      # TODO need to return an array of paths.
       return filepath
 
 

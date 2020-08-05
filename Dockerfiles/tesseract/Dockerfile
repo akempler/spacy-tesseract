@@ -9,7 +9,7 @@ RUN apt-add-repository universe
 RUN apt-get install -y python3 python3-pip
 
 RUN apt-get -y install tesseract-ocr
-RUN apt-get -y install libtesseract-dev
+RUN apt-get -y install libtesseract-dev poppler-utils
 
 ENV DEBIAN_FRONTEND=newt
 
