@@ -1,6 +1,8 @@
 <?php
+# Example of sending an image or pdf file.
 # run locally with:
-# php -S localhost:8000
+# php -S localhost:8080
+# Then access at http://localhost:8080/sample.php
 
 use GuzzleHttp\Client;
 
@@ -15,8 +17,9 @@ $options = [
     'multipart' => [
         [
             'name' => 'file',
-            'contents' => fopen('./images/fiscalimpact1.png', 'r'),
-            'filename' => 'eurotext.png',
+            //'contents' => fopen('./images/fiscalimpact1.png', 'r'),
+            'contents' => fopen('./pdf/H3485-2019-01-09-introduced.pdf', 'r'),
+            'filename' => 'H3485-2019-01-09-introduced.pdf',
         ],
         [
             'name' => 'phrase_list',
