@@ -1,3 +1,4 @@
+from flask import request, jsonify
 from werkzeug.utils import secure_filename
 import os
 import sys
@@ -11,13 +12,12 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'pdf'])
 
 def upload_file(request):
   """
-  This function will handle the upload a file and return of the extracted text via tesseract.
-  No spacy or other processing will be done.
+  Handle the upload a file. Can be an image or pdf.
   """
   if request.method == 'POST':
 
-    if 'file' not in request.files:
-      return jsonify(error='No file provided with key of "file" found')
+    # if 'file' not in request.files:
+    #   return jsonify(error='No file provided with key of "file" found')
 
     file = request.files['file']
     
@@ -51,3 +51,17 @@ def upload_file(request):
 def allowed_file_type(filename):
   return '.' in filename and \
     filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def request_data_type(request):
+  """
+  Check if either a file or text was provided to be proccessed.
+  """
+
+  req_data = request.get_json()
+
+  if 'file' in request.files:
+    return 'file'
+  elif 'text' in req_data:
+    return 'text'
+  else:
+    return 'false'
