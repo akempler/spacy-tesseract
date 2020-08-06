@@ -1,6 +1,8 @@
 <?php
+# Example of sending an image or pdf file.
 # run locally with:
-# php -S localhost:8000
+# php -S localhost:8080
+# Then access at http://localhost:8080/sample.php
 
 use GuzzleHttp\Client;
 

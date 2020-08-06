@@ -7,7 +7,7 @@ import pytesseract
 import os
 import sys
 import re
-from utils import upload_file
+from utils import upload_file, request_data_type
 import json
 
 import spacy
@@ -65,9 +65,16 @@ def annotate_file():
   This function will handle the upload a file and return the spacy sentences.
   """
 
-  filepath = upload_file(request)
+  datatype = request_data_type(request)
 
-  extracted_text = ocr_core(filepath)
+  if datatype == 'file':
+    filepath = upload_file(request)
+    text = ocr_core(filepath)
+  elif datatype == 'text':
+    req_data = request.get_json()
+    text = req_data['text']
+  else:
+    return jsonify(msg='No valid file or text found.')
 
   nlp = spacy.load("en_core_web_md")
 
@@ -80,7 +87,7 @@ def annotate_file():
     matcher.add('InfoItems', None, *phrase_patterns)
     nlp.add_pipe(set_custom_boundaries, before="parser")
 
-  doc = nlp(extracted_text)
+  doc = nlp(text)
   sentences = []
   sents = list(doc.sents)
   for s in sents:
