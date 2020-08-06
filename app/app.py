@@ -13,6 +13,7 @@ import json
 import spacy
 from spacy import displacy
 from spacy.matcher import PhraseMatcher
+import numpy as np
 
 app = Flask(__name__)
 app.debug = True
@@ -60,7 +61,7 @@ def set_custom_boundaries(doc):
   return doc
 
 @app.route('/api/annotate/sentences', methods = ['POST'])
-def annotate_file():
+def annotate_sentences():
   """
   This function will handle the upload a file and return the spacy sentences.
   """
@@ -94,6 +95,32 @@ def annotate_file():
     sentences.append(s.text)
 
   return jsonify(sentences=sentences)
+
+@app.route('/api/annotate/entities', methods = ['POST'])
+def annotate_entities():
+  """
+  This function will handle the upload a file and return spacy entities.
+  """
+
+  datatype = request_data_type(request)
+
+  if datatype == 'file':
+    filepath = upload_file(request)
+    text = ocr_core(filepath)
+  elif datatype == 'text':
+    req_data = request.get_json()
+    text = req_data['text']
+  else:
+    return jsonify(msg='No valid file or text found.')
+
+  entities = []
+  nlp = spacy.load("en_core_web_md")
+  doc = nlp(text)
+  for ent in doc.ents:
+    info = [ent.text, ent.start_char, ent.end_char, ent.label_]
+    entities.append(info)
+
+  return jsonify(entities=entities)
 
 if __name__ == '__main__':
    app.run(host="0.0.0.0", port=5000, debug=True)
