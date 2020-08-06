@@ -17,7 +17,7 @@ Clone this repo.
 These endpoints are available at:
 http://localhost:5000
 
-#### OCR
+### OCR / Tesseract
 Uses tesseract to retrieve the text from an image.
 
 #### `POST` `/api/ocr`
@@ -64,18 +64,18 @@ Example response:
 
 ---
 
-#### Spacy
+### Spacy NLP
 Uses Spacy nlp to retrieve information about text.  
 
-Can provide a pdf or a text string to these endpoints.
+Can provide an image, pdf or a text string to these endpoints. 
+You must provide one or the other of these. If both are present, the pdf will be used as the source.
 
 #### `POST` `/api/annotate/sentences`
 
-You must provide one or the other of these. If both are present, the pdf will be used as the source.
 ```
 {
   "file": A source pdf file, <br/>
-  "text": Text to prociess (instead of a file).
+  "text": Text to process (instead of a file).
 }
 ```
 
@@ -101,6 +101,49 @@ Example response:
     "House Judiciary\n\nRFA Analyst(s)",
     ": Griffith and Gardner\nImpact Date:___April 4, 2019\n\n \n\n",
     "Fiscal Impact Summary\n\n",
+  ]
+}
+```
+
+See /samples/sample.php for an example using GuzzleHttp.
+
+#### `POST` `/api/annotate/entities`
+
+```
+{
+  "file": A source pdf file, <br/>
+  "text": On July 4th, 1998 a large disc shaped object was seen hovering over New York City. Spotted by David Templer, he assumed it was a UFO. However, it turned out to be a hot air balloon.
+}
+```
+
+Name | Type | Description
+------------ | ------------- | -------------
+file | file resource | The file to process for text.
+text | Text string | The text to process.
+
+Example response:
+
+```
+{
+  "entities": [
+    [
+      "July 4th, 1998",
+      12,
+      26,
+      "DATE"
+    ],
+    [
+      "New York City",
+      77,
+      90,
+      "GPE"
+    ],
+    [
+      "David Templer",
+      103,
+      115,
+      "PERSON"
+    ]
   ]
 }
 ```
