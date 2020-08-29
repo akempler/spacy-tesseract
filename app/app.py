@@ -17,13 +17,17 @@ import numpy as np
 
 app = Flask(__name__)
 app.debug = True
+app.psm = '3'
+app.oem = '3'
 
 def ocr_core(filepath):
-    """
-    This function will handle the core OCR processing of images.
-    """
-    text = pytesseract.image_to_string(Image.open(filepath)) 
-    return text
+  """
+  This function will handle the core OCR processing of images.
+  """
+  image = Image.open(filepath)
+  custom_oem_psm_config = '--oem ' + app.oem + ' --psm ' + app.psm
+  text = pytesseract.image_to_string(image, config=custom_oem_psm_config) 
+  return text
 
 @app.route("/")
 def root():
@@ -44,6 +48,14 @@ def ocr():
   No spacy or other processing will be done.
   """
   if request.method == 'POST':
+
+    psm = request.form.get("psm")
+    if psm is not None:
+      app.psm = json.loads(psm)
+
+    oem = request.form.get("oem")
+    if oem is not None:
+      app.oem = json.loads(oem)
 
     filepath = upload_file(request)
 
