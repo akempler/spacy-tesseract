@@ -21,4 +21,8 @@ RUN pip3 install -r ./requirements.txt
 
 RUN python3 -m spacy download en_core_web_md
 
-CMD ["python3", "app.py"]
+ENV FLASK_APP "app.py"
+ENV FLASK_ENV "development"
+ENV FLASK_DEBUG True
+
+CMD flask run --host=0.0.0.0

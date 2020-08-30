@@ -1,4 +1,10 @@
 .vscode/
 app/__pycache__/
+*.__pycache__
+.pytest_cache/
+htmlcov/
+dist/
+build/
+*.egg-info/
 app/uploads/
 vendor
