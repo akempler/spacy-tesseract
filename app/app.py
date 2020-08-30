@@ -31,4 +31,7 @@ def create_app(test_config=None):
   import spacynlp
   app.register_blueprint(spacynlp.bp)
 
+  import filemgmnt
+  app.register_blueprint(filemgmnt.bp)
+
   return app

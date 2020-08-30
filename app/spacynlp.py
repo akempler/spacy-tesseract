@@ -8,13 +8,13 @@ import pytesseract
 import os
 import sys
 import re
-from utils import upload_file, request_data_type
 import json
 
 import spacy
 from spacy import displacy
 from spacy.matcher import PhraseMatcher
 import numpy as np
+from filemgmnt import upload_file, request_data_type
 from tesseract import ocr_core
 
 bp = Blueprint('spacynlp', __name__, url_prefix='/api')

@@ -8,8 +8,9 @@ import pytesseract
 import os
 import sys
 import re
-from utils import upload_file, request_data_type
 import json
+
+from filemgmnt import upload_file, request_data_type
 
 bp = Blueprint('tesseract', __name__, url_prefix='/api')
 

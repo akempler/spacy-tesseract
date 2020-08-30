@@ -10,7 +10,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 $url = 'http://localhost:5000/api/annotate/sentences';
 
-//http://docs.guzzlephp.org/en/stable/
+// http://docs.guzzlephp.org/en/stable/
 $client = new \GuzzleHttp\Client();
 
 $text = 'Summary: On July 4th, 1998 a large disc shaped object was seen hovering over New York City. Many assumed it was a UFO. However, it turned out to be a hot air balloon';

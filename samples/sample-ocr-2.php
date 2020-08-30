@@ -1,8 +1,8 @@
 <?php
-# Example of sending an image or pdf file.
+# Example of sending a pdf file and running ocr with custom settings on it.
 # run locally with:
 # php -S localhost:8080
-# Then access at http://localhost:8080/sample-ocr.php
+# Then access at http://localhost:8080/sample-ocr-2.php
 
 use GuzzleHttp\Client;
 
@@ -17,16 +17,17 @@ $options = [
     'multipart' => [
         [
             'name' => 'file',
-            //'contents' => fopen('./images/fiscalimpact1.png', 'r'),
-            'contents' => fopen('./pdf/H3485-2019-01-09-introduced.pdf', 'r'),
-            'filename' => 'H3485-2019-01-09-introduced.pdf',
+            'contents' => fopen('./pdf/H3601-2019-02-28-amended.pdf', 'r'),
+            'filename' => 'H3601-2019-02-28-amended.pdf',
+        ],
+        [
+            'name' => 'psm',
+            'contents' => json_encode('11')
         ]
     ],
 ];
 $response = $client->post($url, $options);
 
-//echo $response->getStatusCode(); // 200
-//echo $response->getHeaderLine('content-type'); // 'application/json; charset=utf8'
 echo"<pre>";
 echo $response->getBody(); 
 echo"</pre>";
