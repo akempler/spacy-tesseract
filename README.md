@@ -175,11 +175,12 @@ See /samples/sample.php for an example using GuzzleHttp.
   "text": On July 4th, 1998 a large disc shaped object was seen hovering over New York City. Spotted by David Templer, he assumed it was a UFO. However, it turned out to be a hot air balloon.
 }
 ```
+NOTE: provide EITHER a file or text:
 
 Name | Type | Description
 ------------ | ------------- | -------------
 file | file resource | The file to process for text.
-text | Text string | The text to process.
+text | Text string | The text to process (instead of a file).
 
 Example response:
 
@@ -205,5 +206,233 @@ Example response:
       "PERSON"
     ]
   ]
+}
+```
+
+#### `POST` `/api/annotate/pos`
+
+Proivdes PoS (part of speech) tagging using Spacy.
+
+@see https://spacy.io/usage/linguistic-features#pos-tagging  
+@see https://spacy.io/api/annotation#pos-tagging
+
+```
+{
+  "file": A source pdf file, <br/>
+  "text": On July 4th, 1998 a large disc shaped object was seen hovering over New York City. Spotted by David Templer, he assumed it was a UFO. However, it turned out to be a hot air balloon.
+}
+```
+NOTE: provide EITHER a file or text:
+
+Name | Type | Description
+------------ | ------------- | -------------
+file | file resource | The file to process for text.
+text | Text string | The text to process (instead of a file).
+
+Example response, with the following data for each item (for the first item below): 
+* token text - "Amended"
+* token lemma - "ammend"
+* token PoS - "VERB" (https://spacy.io/api/annotation#pos-universal)
+* token tag - "VBN" (verb, non-3rd person singular present, https://spacy.io/api/annotation#pos-en)
+* token dependency - "ROOT" (https://spacy.io/api/annotation#dependency-parsing-english)
+
+```
+{
+    "tokens": [
+        [
+            "Amended",
+            "amend",
+            "VERB",
+            "VBN",
+            "ROOT"
+        ],
+        [
+            "by",
+            "by",
+            "ADP",
+            "IN",
+            "agent"
+        ],
+        [
+            "the",
+            "the",
+            "DET",
+            "DT",
+            "det"
+        ],
+        [
+            "House",
+            "House",
+            "PROPN",
+            "NNP",
+            "pobj"
+        ],
+        [
+            "of",
+            "of",
+            "ADP",
+            "IN",
+            "prep"
+        ],
+        [
+            "Representatives",
+            "Representatives",
+            "PROPN",
+            "NNPS",
+            "pobj"
+        ],
+        [
+            "on",
+            "on",
+            "ADP",
+            "IN",
+            "prep"
+        ],
+        [
+            "February",
+            "February",
+            "PROPN",
+            "NNP",
+            "pobj"
+        ],
+        [
+            "28",
+            "28",
+            "NUM",
+            "CD",
+            "nummod"
+        ],
+        [
+            ",",
+            ",",
+            "PUNCT",
+            ",",
+            "punct"
+        ],
+        [
+            "2020",
+            "2020",
+            "NUM",
+            "CD",
+            "nummod"
+        ]
+    ]
+}
+```
+
+#### `POST` `/api/annotate/entities_pos`
+
+Proivdes PoS (part of speech) tagging and Named Entity Recognition using Spacy.
+
+```
+{
+  "file": A source pdf file, <br/>
+  "text": Amended by the House of Representatives on February 28, 2020.
+}
+```
+NOTE: provide EITHER a file or text:
+
+Name | Type | Description
+------------ | ------------- | -------------
+file | file resource | The file to process for text.
+text | Text string | The text to process (instead of a file).
+
+Sample Output:
+
+```
+{
+    "entities": [
+        [
+            "the House of Representatives",
+            11,
+            39,
+            "ORG"
+        ],
+        [
+            "February 28, 2020",
+            43,
+            60,
+            "DATE"
+        ]
+    ],
+    "tokens": [
+        [
+            "Amended",
+            "amend",
+            "VERB",
+            "VBN",
+            "ROOT"
+        ],
+        [
+            "by",
+            "by",
+            "ADP",
+            "IN",
+            "agent"
+        ],
+        [
+            "the",
+            "the",
+            "DET",
+            "DT",
+            "det"
+        ],
+        [
+            "House",
+            "House",
+            "PROPN",
+            "NNP",
+            "pobj"
+        ],
+        [
+            "of",
+            "of",
+            "ADP",
+            "IN",
+            "prep"
+        ],
+        [
+            "Representatives",
+            "Representatives",
+            "PROPN",
+            "NNPS",
+            "pobj"
+        ],
+        [
+            "on",
+            "on",
+            "ADP",
+            "IN",
+            "prep"
+        ],
+        [
+            "February",
+            "February",
+            "PROPN",
+            "NNP",
+            "pobj"
+        ],
+        [
+            "28",
+            "28",
+            "NUM",
+            "CD",
+            "nummod"
+        ],
+        [
+            ",",
+            ",",
+            "PUNCT",
+            ",",
+            "punct"
+        ],
+        [
+            "2020",
+            "2020",
+            "NUM",
+            "CD",
+            "nummod"
+        ]
+    ]
 }
 ```
