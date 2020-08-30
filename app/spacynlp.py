@@ -89,3 +89,60 @@ def annotate_entities():
     entities.append(info)
 
   return jsonify(entities=entities)
+
+@bp.route('/annotate/pos', methods = ['POST'])
+def annotate_pos():
+  """
+  This function will handle the upload a file and return spacy pos tags.
+  """
+
+  datatype = request_data_type(request)
+
+  if datatype == 'file':
+    filepath = upload_file(request)
+    text = ocr_core(filepath)
+  elif datatype == 'text':
+    req_data = request.get_json()
+    text = req_data['text']
+  else:
+    return jsonify(msg='No valid file or text found.')
+
+  tokens = []
+  nlp = spacy.load("en_core_web_md")
+  doc = nlp(text)
+  for token in doc:
+    info = [token.text, token.lemma_, token.pos_, token.tag_, token.dep_]
+    tokens.append(info)
+
+  return jsonify(tokens=tokens)
+
+@bp.route('/annotate/pos_entities', methods = ['POST'])
+def annotate_pos_entities():
+  """
+  This function will handle the upload a file and return spacy entities and pos tags.
+  """
+
+  datatype = request_data_type(request)
+
+  if datatype == 'file':
+    filepath = upload_file(request)
+    text = ocr_core(filepath)
+  elif datatype == 'text':
+    req_data = request.get_json()
+    text = req_data['text']
+  else:
+    return jsonify(msg='No valid file or text found.')
+
+  tokens = []
+  entities= []
+  nlp = spacy.load("en_core_web_md")
+  doc = nlp(text)
+  for token in doc:
+    info = [token.text, token.lemma_, token.pos_, token.tag_, token.dep_]
+    tokens.append(info)
+
+  for ent in doc.ents:
+    info = [ent.text, ent.start_char, ent.end_char, ent.label_]
+    entities.append(info)
+
+  return jsonify(tokens=tokens, entities=entities)
